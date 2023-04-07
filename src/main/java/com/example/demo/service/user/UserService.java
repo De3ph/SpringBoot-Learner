@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class UserService implements IUserService {
     private final UserRepository repository;
+    private final Logger logger = Logger.getLogger(UserService.class.getName());
 
     public UserService(UserRepository repository) {
         this.repository = repository;
@@ -21,7 +23,10 @@ public class UserService implements IUserService {
         List<UserDTO> dtos = new ArrayList<>();
         repository.findAll().forEach(user -> {
             UserDTO dto = UserMapper.INSTANCE.userToUserDto(user);
-            dtos.add(dto);
+            if (dto != null) {
+                dtos.add(dto);
+                logger.info("USER MAPPED SUCCESSFULLY TO DTO. UserDTO: " + dto);
+            }
         });
         return dtos;
 
