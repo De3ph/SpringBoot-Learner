@@ -4,7 +4,7 @@ import com.example.demo.dto.UserDTO;
 
 import java.util.List;
 
-public interface I_UserService {
+public interface IUserService {
     List<UserDTO> getAll();
     UserDTO getUser(Long id);
 }

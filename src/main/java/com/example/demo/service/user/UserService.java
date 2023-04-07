@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService implements I_UserService{
+public class UserService implements IUserService {
     private final UserRepository repository;
 
     public UserService(UserRepository repository) {
