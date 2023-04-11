@@ -1,6 +1,7 @@
 package com.example.demo.service.user;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.exception.user.UserNotFoundException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -33,13 +34,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDTO getUser(Long id)  {
-        UserDTO dto = new UserDTO();
-        if (repository.existsById(id)){
-            dto = UserMapper.INSTANCE.userToUserDto(
-                    repository.findById(id).orElse(null)
-            );
-        }
-        return dto;
+    public UserDTO getUser(Long id) throws UserNotFoundException {
+            return UserMapper.INSTANCE.userToUserDto(
+                    repository.findById(id)
+                            .orElseThrow(() -> new UserNotFoundException("User not found","/user/getUser", "User id: " + id)));
     }
 }

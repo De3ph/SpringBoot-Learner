@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,8 @@ public class User {
     private String password;
     private String fullName;
     private Timestamp createdAt;
+    private Timestamp updatedAt;
+
+    @OneToMany(targetEntity = Account.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Account> accounts;
 }
