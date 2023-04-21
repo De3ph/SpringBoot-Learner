@@ -1,4 +1,4 @@
-package com.example.demo.service.user.response;
+package com.example.demo.service.account.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ResponseDeleteUser {
-    private Integer status; // HttpStatus code
-    private String message;
+public class RequestGetAccountById {
+    private Long id;
 }

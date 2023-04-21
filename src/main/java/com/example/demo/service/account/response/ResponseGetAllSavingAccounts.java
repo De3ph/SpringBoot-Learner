@@ -1,6 +1,6 @@
-package com.example.demo.controller.user.response;
+package com.example.demo.service.account.response;
 
-import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +8,10 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseGetAll {
-    List<UserDTO> dtos;
+@Getter
+@Setter
+public class ResponseGetAllSavingAccounts {
+    List<AccountDTO> dtos;
 }

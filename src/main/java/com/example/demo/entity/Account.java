@@ -2,7 +2,9 @@ package com.example.demo.entity;
 
 import com.example.demo.enums.AccountType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -20,7 +22,6 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User user;
-
     private String name;
 
     @Enumerated(EnumType.STRING)

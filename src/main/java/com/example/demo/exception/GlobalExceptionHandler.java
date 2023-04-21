@@ -1,5 +1,6 @@
 package com.example.demo.exception;
 
+import com.example.demo.exception.account.AccountNotFoundException;
 import com.example.demo.exception.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,13 @@ public class GlobalExceptionHandler {
     // user exceptions
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorDetails> handleUserNotFoundException(UserNotFoundException ex) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "", ex.getPath(),HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    // account exceptions
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleAccountNotFoundException(AccountNotFoundException ex) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "", ex.getPath(),HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }

@@ -1,11 +1,12 @@
 package com.example.demo.controller.user;
 
-import com.example.demo.controller.user.request.RequestGetUser;
-import com.example.demo.controller.user.response.ResponseGetAll;
-import com.example.demo.controller.user.response.ResponseGetUser;
 import com.example.demo.exception.user.UserNotFoundException;
 import com.example.demo.service.user.UserService;
+import com.example.demo.service.user.request.RequestDeleteUserById;
+import com.example.demo.service.user.request.RequestGetUserById;
 import com.example.demo.service.user.response.ResponseDeleteUser;
+import com.example.demo.service.user.response.ResponseGetAll;
+import com.example.demo.service.user.response.ResponseGetUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,24 +23,24 @@ public class UserController {
     @GetMapping(value = "/getAll")
     public ResponseEntity<ResponseGetAll> getAll(){
         ResponseGetAll body = new ResponseGetAll();
-        body.setDtos(service.getAll().getUsers());
+        body.setUsers(service.getAll().getUsers());
 
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     // url de bilgiler gözükmesin diye post yapıyoruz
     @PostMapping(value = "/getUser")
-    public ResponseEntity<ResponseGetUser> getUser(@RequestBody RequestGetUser request)  {
+    public ResponseEntity<ResponseGetUser> getUser(@RequestBody RequestGetUserById request)  {
         ResponseGetUser body = new ResponseGetUser();
-        body.setDto(service.getUser(request.getId()).getUser());
+        body.setUser(service.getUser(request.getId()).getUser());
 
         return new ResponseEntity<>(body,HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/deleteUser")
-    public ResponseEntity<ResponseDeleteUser> deleteUser(@RequestBody RequestDeleteUser request) throws UserNotFoundException {
+    public ResponseEntity<ResponseDeleteUser> deleteUser(@RequestBody RequestDeleteUserById request) throws UserNotFoundException {
         service.deleteUser(request.getId());
-        return new ResponseEntity<>(new ResponseDeleteUser(HttpStatus.OK.value(), "User deleted successfully", "/user/deleteUser"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDeleteUser(HttpStatus.OK.value(), "User deleted successfully"), HttpStatus.OK);
     }
 
 }

@@ -1,5 +1,6 @@
-package com.example.demo.service.user.response;
+package com.example.demo.service.account.response;
 
+import com.example.demo.dto.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ResponseDeleteUser {
-    private Integer status; // HttpStatus code
-    private String message;
+public class ResponseGetAccount {
+    AccountDTO dto;
 }
