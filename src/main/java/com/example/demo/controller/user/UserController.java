@@ -22,25 +22,21 @@ public class UserController {
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<ResponseGetAll> getAll(){
-        ResponseGetAll body = new ResponseGetAll();
-        body.setUsers(service.getAll().getUsers());
-
+        ResponseGetAll body = service.getAll();
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     // url de bilgiler gözükmesin diye post yapıyoruz
     @PostMapping(value = "/getUser")
     public ResponseEntity<ResponseGetUser> getUser(@RequestBody RequestGetUserById request)  {
-        ResponseGetUser body = new ResponseGetUser();
-        body.setUser(service.getUser(request.getId()).getUser());
-
+        ResponseGetUser body = service.getUser(request.getId());
         return new ResponseEntity<>(body,HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/deleteUser")
     public ResponseEntity<ResponseDeleteUser> deleteUser(@RequestBody RequestDeleteUserById request) throws UserNotFoundException {
-        service.deleteUser(request.getId());
-        return new ResponseEntity<>(new ResponseDeleteUser(HttpStatus.OK.value(), "User deleted successfully"), HttpStatus.OK);
+        ResponseDeleteUser body = service.deleteUser(request.getId());
+        return new ResponseEntity<>(body,HttpStatus.OK);
     }
 
 }

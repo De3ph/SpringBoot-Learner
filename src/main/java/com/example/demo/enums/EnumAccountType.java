@@ -1,6 +1,6 @@
 package com.example.demo.enums;
 
-public enum AccountType {
+public enum EnumAccountType {
     CHECKING,
     SAVINGS,
     MONEY_MARKET,

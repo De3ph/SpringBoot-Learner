@@ -2,10 +2,9 @@ package com.example.demo.controller.account;
 
 import com.example.demo.service.account.AccountService;
 import com.example.demo.service.account.request.RequestCreateAccount;
+import com.example.demo.service.account.request.RequestDeleteAccount;
 import com.example.demo.service.account.request.RequestGetAccountById;
-import com.example.demo.service.account.response.ResponseCreateAccount;
-import com.example.demo.service.account.response.ResponseGetAccount;
-import com.example.demo.service.account.response.ResponseGetAll;
+import com.example.demo.service.account.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,22 +22,31 @@ public class AccountController {
 
     @GetMapping("/getAll")
     public ResponseEntity<ResponseGetAll> getAll() {
-        ResponseGetAll body = new ResponseGetAll();
-        body.setDtos(service.getAll().getDtos());
+        ResponseGetAll body = service.getAll();
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     @PostMapping("/getAccount")
     public ResponseEntity<ResponseGetAccount> getAccount(@RequestBody RequestGetAccountById request) {
-        ResponseGetAccount body = new ResponseGetAccount();
-        body.setDto(service.getAccount(request.getId()).getDto());
+        ResponseGetAccount body = service.getAccount(request.getId());
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllSavingAccounts")
+    public ResponseEntity<ResponseGetAllSavingAccounts> getAllSavingAccounts() {
+        ResponseGetAllSavingAccounts body = service.getAllSavingAccounts();
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     @PostMapping("/createAccount")
     public ResponseEntity<ResponseCreateAccount> createAccount(@RequestBody RequestCreateAccount request) {
-        ResponseCreateAccount body = new ResponseCreateAccount();
-        body.setDto(service.createAccount(request).getDto());
+        ResponseCreateAccount body = service.createAccount(request);
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteAccount")
+    public ResponseEntity<ResponseDeleteAccount> deleteAccount(@RequestBody RequestDeleteAccount request) {
+        ResponseDeleteAccount body = service.deleteAccount(request);
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 

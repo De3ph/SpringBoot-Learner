@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.enums.AccountType;
+import com.example.demo.enums.EnumAccountType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +15,6 @@ import java.math.BigInteger;
 public class AccountDTO {
     private String ownerName;
     private String name;
-    private AccountType type;
+    private EnumAccountType type;
     private BigInteger balance;
 }
