@@ -7,6 +7,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.user.response.ResponseDeleteUser;
 import com.example.demo.service.user.response.ResponseGetAll;
 import com.example.demo.service.user.response.ResponseGetUser;
+import com.example.demo.service.user.response.ResponseUpdateUserEmail;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -44,16 +45,30 @@ public class UserService implements IUserService {
         ResponseGetUser response = new ResponseGetUser();
         response.setUser(UserMapper.INSTANCE.toDTO(
                 repository.findById(id)
-                        .orElseThrow(() -> new UserNotFoundException("User not found","/user/getUser", "User id: " + id))));
+                        .orElseThrow(() -> new UserNotFoundException("User not found", "/user/getUser", "User id: " + id))));
         return response;
     }
 
     @Override
     public ResponseDeleteUser deleteUser(Long id) throws UserNotFoundException {
         repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found","/user/deleteUser", "User id: " + id));
+                .orElseThrow(() -> new UserNotFoundException("User not found", "/user/deleteUser", "User id: " + id));
         repository.deleteById(id);
         return new ResponseDeleteUser(HttpStatus.OK.value(), "User deleted successfully");
+    }
+
+    @Override
+    public ResponseUpdateUserEmail updateUserEmail(Long id, String email) throws UserNotFoundException {
+        ResponseUpdateUserEmail response = new ResponseUpdateUserEmail();
+        repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found", "/user/deleteUser", "User id: " + id))
+        ;
+        repository.updateEmailById(id, email);
+        response.setStatus(HttpStatus.OK.value());
+        response.setDto(
+                UserMapper.INSTANCE.toDTO(repository.findByEmail(email))
+        );
+        return response;
     }
 
 

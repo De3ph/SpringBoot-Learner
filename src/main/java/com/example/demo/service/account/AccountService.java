@@ -10,7 +10,9 @@ import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.account.request.RequestCreateAccount;
 import com.example.demo.service.account.request.RequestDeleteAccount;
+import com.example.demo.service.account.request.RequestUpdateAccountName;
 import com.example.demo.service.account.response.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -95,6 +97,19 @@ public class AccountService implements IAccountService {
         repository.delete(account);
         response.setSuccessType(EnumSuccessType.SUCCESS);
         logger.fine("ACCOUNT DELETED SUCCESSFULLY. AccountId: " + request.getId());
+        return response;
+    }
+
+    @Override
+    public ResponseUpdateAccountName updateAccountName(RequestUpdateAccountName request){
+        ResponseUpdateAccountName response = new ResponseUpdateAccountName();
+        if (repository.existsById(request.getId())){
+            throw new AccountNotFoundException("Account not found", "/service/account", "");
+        }
+        repository.updateAccountName(request.getId(), request.getName());
+        response.setStatus(HttpStatus.OK.value());
+        response.setDto(AccountMapper.INSTANCE.toDTO(repository.findById(request.getId()).get(), repository.findById(request.getId()).get().getUser()));
+        logger.fine("ACCOUNT NAME UPDATED SUCCESSFULLY. AccountDTO: " + response.getDto());
         return response;
     }
 }

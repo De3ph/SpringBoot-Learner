@@ -1,31 +1,35 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.util.List;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "userSequence",
+            sequenceName = "userSequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "userSequence"
+    )
+
     private Long id;
     private String username;
     private String email;
     private String password;
     private String fullName;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-
-    @OneToMany(targetEntity = Account.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
-    @JsonBackReference
-    private List<Account> accounts;
+    private Date createdAt;
+    private Date updatedAt;
 }

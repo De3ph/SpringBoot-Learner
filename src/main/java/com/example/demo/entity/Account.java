@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 @Entity
@@ -16,13 +16,35 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Account {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "accountSequence",
+            sequenceName = "accountSequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "accountSequence")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @NotNull
+    @Column(
+            name = "account_number",
+            unique = true
+    )
+    private Integer accountNumber;
+
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    @JoinColumn(
+            name = "user_id",
+            referencedColumnName = "id"
+    )
     private User user;
 
     @NotNull
@@ -32,7 +54,7 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private EnumAccountType type;
 
-    private BigInteger balance;
+    private Double balance;
     private Date createdAt;
     private Date updatedAt;
 }

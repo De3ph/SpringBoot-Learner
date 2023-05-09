@@ -4,9 +4,11 @@ import com.example.demo.exception.user.UserNotFoundException;
 import com.example.demo.service.user.UserService;
 import com.example.demo.service.user.request.RequestDeleteUserById;
 import com.example.demo.service.user.request.RequestGetUserById;
+import com.example.demo.service.user.request.RequestUpdateUserEmail;
 import com.example.demo.service.user.response.ResponseDeleteUser;
 import com.example.demo.service.user.response.ResponseGetAll;
 import com.example.demo.service.user.response.ResponseGetUser;
+import com.example.demo.service.user.response.ResponseUpdateUserEmail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,12 @@ public class UserController {
     public ResponseEntity<ResponseDeleteUser> deleteUser(@RequestBody RequestDeleteUserById request) throws UserNotFoundException {
         ResponseDeleteUser body = service.deleteUser(request.getId());
         return new ResponseEntity<>(body,HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/updateUserEmail")
+    public ResponseEntity<ResponseUpdateUserEmail> updateUserEmail(@RequestBody RequestUpdateUserEmail request) throws UserNotFoundException{
+        ResponseUpdateUserEmail body = service.updateUserEmail(request.getId(), request.getEmail());
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
 }

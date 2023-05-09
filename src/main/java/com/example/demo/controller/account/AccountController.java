@@ -4,6 +4,7 @@ import com.example.demo.service.account.AccountService;
 import com.example.demo.service.account.request.RequestCreateAccount;
 import com.example.demo.service.account.request.RequestDeleteAccount;
 import com.example.demo.service.account.request.RequestGetAccountById;
+import com.example.demo.service.account.request.RequestUpdateAccountName;
 import com.example.demo.service.account.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,12 @@ public class AccountController {
     public ResponseEntity<ResponseDeleteAccount> deleteAccount(@RequestBody RequestDeleteAccount request) {
         ResponseDeleteAccount body = service.deleteAccount(request);
         return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateAccountName")
+    public ResponseEntity<ResponseUpdateAccountName> updateAccountName(@RequestBody RequestUpdateAccountName request){
+        ResponseUpdateAccountName body = service.updateAccountName(request);
+        return new ResponseEntity<>(body,HttpStatus.OK);
     }
 
 }
