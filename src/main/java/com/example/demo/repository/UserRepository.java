@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
@@ -24,4 +26,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     void updateEmailById(@Param("id") Long id, @Param("email") String email);
 
     User findByEmail(String email);
+
+    List<User> findAllByBanksId(Long bankId);
 }

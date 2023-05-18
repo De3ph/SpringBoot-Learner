@@ -26,4 +26,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
             nativeQuery = true
     )
     int updateAccountName(@Param("id") Long id, @Param("name") String name);
+
+    List<Account> findAllByUserId(Long userId);
 }

@@ -45,7 +45,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    void saveAccountWithoutUser() {
+    void saveAccountWithoutUser() throws Exception {
         Account account = Account.builder()
                 .name("Account 1")
                 .accountNumber(1234567890)
@@ -92,6 +92,47 @@ class AccountRepositoryTest {
                 updatedAccount.getName()
                 ,
                 newAccountName
+        );
+    }
+
+    @Test
+    void findAccountsByUserId(){
+        User user = User.builder()
+                .fullName("John Doe")
+                .email("johndoe@gmail.com")
+                .password("doggoAndfoggo")
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .build();
+
+        Account account1 = Account.builder()
+                .name("Account 1")
+                .accountNumber(1234567890)
+                .type(EnumAccountType.SAVINGS)
+                .balance(1000.00)
+                .user(user)
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .build();
+
+        Account account2 = Account.builder()
+                .name("Account 2")
+                .accountNumber(0000000)
+                .type(EnumAccountType.CHECKING)
+                .balance(1000.00)
+                .user(user)
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .build();
+
+
+        repository.save(account1);
+        repository.save(account2);
+
+        Assertions.assertEquals(
+                repository.findAllByUserId(user.getId()).size()
+                ,
+                2
         );
     }
 }

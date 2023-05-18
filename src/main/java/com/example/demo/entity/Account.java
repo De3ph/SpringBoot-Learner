@@ -57,4 +57,14 @@ public class Account {
     private Double balance;
     private Date createdAt;
     private Date updatedAt;
+
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(
+            name = "bank_id",
+            referencedColumnName = "id"
+    )
+    private Bank bank;
 }

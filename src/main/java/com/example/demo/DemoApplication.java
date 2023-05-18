@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @OpenAPIDefinition
-@ComponentScan(basePackages = {"com.example.demo.","com.example.demo.utils"})
+@ComponentScan(basePackages = {"com.example.demo","com.example.demo.utils"})
 public class DemoApplication {
 
 	public static void main(String[] args) {

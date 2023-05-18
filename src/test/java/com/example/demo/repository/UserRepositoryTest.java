@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.entity.Bank;
 import com.example.demo.entity.User;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Date;
+import java.util.List;
 
 @DataJpaTest
 class UserRepositoryTest {
@@ -17,6 +19,8 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private BankRepository bankRepository;
 
     @Inject
     private EntityManager entityManager;
@@ -86,6 +90,40 @@ class UserRepositoryTest {
         entityManager.refresh(updatedUser);
 
         Assertions.assertEquals(updatedUser.getEmail(),newEmail);
+
+    }
+
+    @Test
+    void findUsersByBankId(){
+        Bank bank = Bank.builder()
+                .name("YKB")
+                .address("gebze")
+                .build();
+
+        User user = User.builder()
+                .fullName("John Doe")
+                .email("dasdsad@gmail.com")
+                .password("doggoAndfoggo")
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .build();
+        User user2 = User.builder()
+                .fullName("Joanne Doe")
+                .email("dasdsad@gmail.com")
+                .password("doggoAndfoggo")
+                .createdAt(new Date())
+                .updatedAt(new Date())
+                .build();
+
+        bank.addUser(user);
+        bank.addUser(user2);
+
+        Bank savedBank = bankRepository.save(bank);
+
+        List<User> users = repository.findAllByBanksId(savedBank.getId());
+
+        Assertions.assertNotNull(users);
+        Assertions.assertEquals(users.size(),2);
 
     }
 
